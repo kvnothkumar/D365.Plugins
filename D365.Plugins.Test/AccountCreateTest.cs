@@ -43,7 +43,7 @@ namespace D365.Plugins.Test
         }
 
 
-        [Test, Order(2)]
+        [Test, Order(1)]
         public void CheckTask()
         {
             //Arrange
@@ -65,17 +65,7 @@ namespace D365.Plugins.Test
             Assert.IsNotNull(task);
             Assert.IsTrue(task.GetAttributeValue<String>("subject").StartsWith("Follow-Up with Account"));
             Assert.IsTrue(task.GetAttributeValue<DateTime>("createdon").Date == DateTime.Today.Date);
-        }
-
-        [Test, Order(1)]
-        public void CheckInputParameter()
-        {
-            this.context.ExecutePluginWith<AccountCreate>(null, null, null, null);
-
-            Entity task = QueryHelper.GetEntity(organizationService, "task", "regardingobjectid", ((Guid)parameters["AccountId"]), "subject", "createdon", "actualend");
-
-            Assert.IsNull(task);
-        }
+        }       
 
         [OneTimeTearDown]
         public void Delete()
